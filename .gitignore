@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local configuration file (SABSE ZAROORI)
+.env
+db.sqlite3
+db.sqlite3-journal
+
+# Static and Media files (Cloudinary handle kar raha hai)
+staticfiles/
+media/
+
+# Virtual Environment
+venv/
+env/
+renv/
+.venv/
+.env/
+
+# IDE / Editor folders
+.vscode/
+.idea/
+*.swp
+*.bak
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Hosting / Deployment files
+*.log
