@@ -24,12 +24,12 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 #     '.onrender.com',     
 #     'yourdomain.com'
 # ]
-
 ALLOWED_HOSTS = [
     'ramsnehi-photography-backend.onrender.com',
-    '.onrender.com', 
-    'localhost', 
-    '127.0.0.1'
+    '.onrender.com',
+    'localhost',
+    '127.0.0.1',
+    '[::1]', # IPv6 ke liye
 ]
 # --- APPS ---
 INSTALLED_APPS = [
@@ -64,10 +64,13 @@ MIDDLEWARE = [
 ]
 
 # --- CORS ---
+
 CORS_ALLOW_ALL_ORIGINS = DEBUG # Sirf Debug mode mein sab allow karein
 if not DEBUG:
     CORS_ALLOWED_ORIGINS = [
         "https://ramsnehi-photography.vercel.app",
+        "http://localhost:5173",   # ✅ Aapka frontend yahan aayega
+        "http://127.0.0.1:5173",
     ]
     CSRF_TRUSTED_ORIGINS = ["https://ramsnehi-photography.vercel.app"]
 CORS_ALLOW_CREDENTIALS = True
