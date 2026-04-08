@@ -65,17 +65,26 @@ MIDDLEWARE = [
 
 # --- CORS ---
 
-CORS_ALLOW_ALL_ORIGINS = DEBUG # Sirf Debug mode mein sab allow karein
+# --- CORS ---
+CORS_ALLOW_ALL_ORIGINS = DEBUG 
+
 if not DEBUG:
     CORS_ALLOWED_ORIGINS = [
         "https://ramsnehi-photography.vercel.app",
-        "http://localhost:5173",   # ✅ Aapka frontend yahan aayega
+        "http://localhost:5173",
         "http://127.0.0.1:5173",
     ]
-    CSRF_TRUSTED_ORIGINS = ["https://ramsnehi-photography.vercel.app"]
+    # ✅ Sabse important: Localhost ko yahan add karna MUST hai
+    CSRF_TRUSTED_ORIGINS = [
+        "https://ramsnehi-photography.vercel.app",
+        "https://ramsnehi-photography-backend.onrender.com",
+        "http://localhost:5173", 
+        "http://127.0.0.1:5173"
+    ]
+
 CORS_ALLOW_CREDENTIALS = True
 
-# ✅ Ye headers allow karna zaroori hai browser ke liye
+# ✅ Sabhi required headers allow karein
 CORS_ALLOW_HEADERS = [
     "accept",
     "authorization",
@@ -83,9 +92,8 @@ CORS_ALLOW_HEADERS = [
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
-    "cache-control",  # <--- Iski wajah se pichhla error aa raha tha
+    "cache-control",
 ]
-
 # --- DATABASE (Supabase Optimization) ---
 DATABASES = {
     'default': dj_database_url.config(
