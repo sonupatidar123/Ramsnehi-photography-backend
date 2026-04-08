@@ -18,13 +18,12 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 # 4. Domains allow karein
 ALLOWED_HOSTS = [
-    'localhost', 
-    '127.0.0.1', 
-    '.vercel.app',    # Frontend Vercel ke liye
-    '.onrender.com',  # Backend Render ke liye
-    'yourdomain.com'  # Agar koi custom domain hai
+    'localhost',          # Sirf hostname
+    '127.0.0.1',         # Local IP
+    '.vercel.app',       # Subdomains allowed
+    '.onrender.com',     
+    'yourdomain.com'
 ]
-
 # --- APPS ---
 INSTALLED_APPS = [
     'django.contrib.admin',
