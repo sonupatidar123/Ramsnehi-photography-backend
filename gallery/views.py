@@ -2,11 +2,15 @@ from rest_framework import viewsets, permissions, filters, mixins
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny, IsAdminUser
 from .models import GalleryItem, Film, Testimonial, Inquiry
+from django.http import HttpResponse
 from .serializers import (
     GalleryItemSerializer, FilmSerializer, 
     TestimonialSerializer, InquirySerializer
 )
 
+def home(request):
+    return HttpResponse("Backend is running 🚀")
+    
 class GalleryItemViewSet(viewsets.ModelViewSet):
     """
     Admin can CRUD, Public can only List/Retrieve.

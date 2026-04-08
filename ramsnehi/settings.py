@@ -4,23 +4,23 @@ from datetime import timedelta
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-import dj_database_url
+# 1. Import dj_database_url for easy hosting connection
+import dj_database_url 
 
-PORT = os.environ.get("PORT", 10000)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- SECURITY ---
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-your-fallback-key')
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
+# 4. Domains allow karein
 ALLOWED_HOSTS = [
-    'ramsnehi-photography-backend.onrender.com',
-    '.onrender.com',
-    'localhost',
-    '127.0.0.1',
-    '[::1]',
+    'localhost', 
+    '127.0.0.1', 
+    '.vercel.app',    # Frontend Vercel ke liye
+    '.onrender.com',  # Backend Render ke liye
+    'yourdomain.com'  # Agar koi custom domain hai
 ]
-
 # --- APPS ---
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -77,8 +77,7 @@ SIMPLE_JWT = {
 }
 
 # --- CORS ---
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # True only in local dev
-
+CORS_ALLOW_ALL_ORIGINS = DEBUG # Sirf Debug mode mein sab allow karein
 if not DEBUG:
     CORS_ALLOWED_ORIGINS = [
         "https://ramsnehi-photography.vercel.app",  # ✅ your frontend
@@ -89,38 +88,27 @@ if not DEBUG:
     ]
     CSRF_TRUSTED_ORIGINS = [
         "https://ramsnehi-photography.vercel.app",
-        "https://ramsnehi-photography-backend.onrender.com",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
     ]
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOW_HEADERS = [
-    "accept",
-    "authorization",
-    "content-type",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-    # ✅ "cache-control" REMOVED — it was triggering CORS preflight failures
-]
-
-# --- DATABASE ---
+# --- DATABASE (Supabase Optimization) ---
 DATABASES = {
     'default': dj_database_url.config(
-        default="postgresql://postgres.wdydpnqymvigsistlqyk:%40Egsonu9770@aws-1-ap-south-1.pooler.supabase.com:5432/postgres",
-        conn_max_age=0,
+        default=f"postgresql://postgres.wdydpnqymvigsistlqyk:{os.environ.get('DB_PASSWORD', '@Egsonu9770')}@aws-1-ap-south-1.pooler.supabase.com:6543/postgres",
+        conn_max_age=600,
         ssl_require=True
     )
 }
 
+# --
+
 # --- CLOUDINARY ---
-cloudinary.config(
-    cloud_name=os.environ.get('CLOUDINARY_NAME'),
-    api_key=os.environ.get('CLOUDINARY_API_KEY'),
-    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
-    secure=True
+cloudinary.config( 
+    cloud_name = os.environ.get('CLOUDINARY_NAME', 'dguujmj75'),
+    api_key = os.environ.get('CLOUDINARY_API_KEY', '674752937135479'), 
+    api_secret = os.environ.get('CLOUDINARY_API_SECRET', 'HiFvbp-AOwcf_1fbwnRh0zW7KeI'),
+    secure = True
 )
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
@@ -131,7 +119,6 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
