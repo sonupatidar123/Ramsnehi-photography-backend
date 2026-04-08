@@ -75,6 +75,17 @@ if not DEBUG:
     CSRF_TRUSTED_ORIGINS = ["https://ramsnehi-photography.vercel.app"]
 CORS_ALLOW_CREDENTIALS = True
 
+# ✅ Ye headers allow karna zaroori hai browser ke liye
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "cache-control",  # <--- Iski wajah se pichhla error aa raha tha
+]
+
 # --- DATABASE (Supabase Optimization) ---
 DATABASES = {
     'default': dj_database_url.config(
