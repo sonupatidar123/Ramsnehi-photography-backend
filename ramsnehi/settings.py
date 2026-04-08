@@ -24,7 +24,13 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 #     '.onrender.com',     
 #     'yourdomain.com'
 # ]
-ALLOWED_HOSTS = ['ramsnehi-photography-backend.onrender.com']
+
+ALLOWED_HOSTS = [
+    'ramsnehi-photography-backend.onrender.com',
+    '.onrender.com', 
+    'localhost', 
+    '127.0.0.1'
+]
 # --- APPS ---
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -69,8 +75,8 @@ CORS_ALLOW_CREDENTIALS = True
 # --- DATABASE (Supabase Optimization) ---
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"postgresql://postgres.wdydpnqymvigsistlqyk:{os.environ.get('DB_PASSWORD', '@Egsonu9770')}@aws-1-ap-south-1.pooler.supabase.com:6543/postgres",
-        conn_max_age=600,
+        default=f"postgresql://postgres.wdydpnqymvigsistlqyk:%40Egsonu9770@aws-1-ap-south-1.pooler.supabase.com:5432/postgres",
+        conn_max_age=0,  # Pooler ke liye 0 best hai
         ssl_require=True
     )
 }
