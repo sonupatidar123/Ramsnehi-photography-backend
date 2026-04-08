@@ -124,7 +124,7 @@ In your React app, replace mock data fetch calls like:
 const photos = MOCK_GALLERY_DATA.filter(p => p.category === 'Wedding');
 
 // After (live API)
-const res = await fetch('http://localhost:8000/api/gallery/?category=Wedding');
+const res = await fetch('https://ramsnehi-photography-backend.onrender.com/api/gallery/?category=Wedding');
 const data = await res.json();
 const photos = data.results;   // DRF pagination wraps results in .results
 ```
