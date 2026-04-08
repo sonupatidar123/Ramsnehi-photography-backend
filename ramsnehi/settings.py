@@ -62,12 +62,13 @@ if not DEBUG:
     CORS_ALLOWED_ORIGINS = [
         "https://ramsnehi-photography.vercel.app",
     ]
+    CSRF_TRUSTED_ORIGINS = ["https://ramsnehi-photography.vercel.app"]
 CORS_ALLOW_CREDENTIALS = True
 
 # --- DATABASE (Supabase Optimization) ---
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"postgresql://postgres.wdydpnqymvigsistlqyk:{os.environ.get('DB_PASSWORD', '@Egsonu9770')}@aws-1-ap-south-1.pooler.supabase.com:6543/postgres",
+        default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True
     )
@@ -75,9 +76,9 @@ DATABASES = {
 
 # --- CLOUDINARY ---
 cloudinary.config( 
-    cloud_name = os.environ.get('CLOUDINARY_NAME', 'dguujmj75'),
-    api_key = os.environ.get('CLOUDINARY_API_KEY', '674752937135479'), 
-    api_secret = os.environ.get('CLOUDINARY_API_SECRET', 'HiFvbp-AOwcf_1fbwnRh0zW7KeI'),
+    cloud_name = os.environ.get('CLOUDINARY_NAME'),
+    api_key = os.environ.get('CLOUDINARY_API_KEY'), 
+    api_secret = os.environ.get('CLOUDINARY_API_SECRET'),
     secure = True
 )
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
