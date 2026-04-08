@@ -67,20 +67,15 @@ if not DEBUG:
 CORS_ALLOW_CREDENTIALS = True
 
 # --- DATABASE (Supabase Optimization) ---
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=f"postgresql://postgres.wdydpnqymvigsistlqyk:{os.environ.get('DB_PASSWORD', '@Egsonu9770')}@aws-1-ap-south-1.pooler.supabase.com:6543/postgres",
-#         conn_max_age=600,
-#         ssl_require=True
-#     )
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"postgresql://postgres.wdydpnqymvigsistlqyk:{os.environ.get('DB_PASSWORD', '@Egsonu9770')}@aws-1-ap-south-1.pooler.supabase.com:6543/postgres",
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
+
+# --
 
 # --- CLOUDINARY ---
 cloudinary.config( 
