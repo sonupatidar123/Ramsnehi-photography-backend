@@ -6,7 +6,7 @@ import cloudinary.uploader
 import cloudinary.api
 # 1. Import dj_database_url for easy hosting connection
 import dj_database_url 
-
+PORT = os.environ.get("PORT", 10000)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- SECURITY SETTINGS ---
@@ -17,13 +17,14 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-your-fallback-
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 # 4. Domains allow karein
-ALLOWED_HOSTS = [
-    'localhost',          # Sirf hostname
-    '127.0.0.1',         # Local IP
-    '.vercel.app',       # Subdomains allowed
-    '.onrender.com',     
-    'yourdomain.com'
-]
+# ALLOWED_HOSTS = [
+#     'localhost',          # Sirf hostname
+#     '127.0.0.1',         # Local IP
+#     '.vercel.app',       # Subdomains allowed
+#     '.onrender.com',     
+#     'yourdomain.com'
+# ]
+ALLOWED_HOSTS = ['ramsnehi-photography-backend.onrender.com']
 # --- APPS ---
 INSTALLED_APPS = [
     'django.contrib.admin',
