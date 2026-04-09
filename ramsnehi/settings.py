@@ -80,6 +80,7 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = DEBUG # Sirf Debug mode mein sab allow karein
 if not DEBUG:
     CORS_ALLOWED_ORIGINS = [
+        "ramsnehi-photography-frontend.vercel.app",
         "https://ramsnehi-photography.vercel.app",  # ✅ your frontend
         "http://localhost:5173",
         "http://localhost:3000",
@@ -87,6 +88,7 @@ if not DEBUG:
         "http://127.0.0.1:3000",
     ]
     CSRF_TRUSTED_ORIGINS = [
+        "ramsnehi-photography-frontend.vercel.app",
         "https://ramsnehi-photography.vercel.app",
     ]
 
