@@ -1,6 +1,24 @@
 from rest_framework import serializers
-from .models import GalleryItem, Film, Testimonial, Inquiry
+from .models import GalleryItem, Film, Testimonial, Inquiry, Blog, Feedback
 
+
+
+
+class BlogSerializer(serializers.ModelSerializer):
+    date = serializers.DateField(format="%d %B %Y", read_only=True)
+    
+    class Meta:
+        model = Blog
+        fields = ['id', 'date', 'title', 'category', 'image', 'excerpt', 'content']
+        extra_kwargs = {
+            'category': {'read_only': True}, # Not required on POST; uses model default
+        }
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if instance.image:
+            representation['image'] = instance.image.url
+        return representation
 # ---------------------------------------------------------------------------
 # 1. GALLERY SERIALIZER
 # ---------------------------------------------------------------------------
@@ -56,4 +74,13 @@ class InquirySerializer(serializers.ModelSerializer):
             'id', 'full_name', 'email', 'mobile_number', 
             'inquiry_type', 'submitted_at'
         ]
+        read_only_fields = ['submitted_at']
+
+# ---------------------------------------------------------------------------
+# 5. FEEDBACK SERIALIZER
+# ---------------------------------------------------------------------------
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feedback
+        fields = ['id', 'name', 'feedback_text', 'submitted_at']
         read_only_fields = ['submitted_at']

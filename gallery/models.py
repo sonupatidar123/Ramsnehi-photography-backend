@@ -2,10 +2,31 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 import re
 
-# ---------------------------------------------------------------------------
-# 1. GALLERY MODEL
-# ---------------------------------------------------------------------------
 
+
+class Blog(models.Model):
+    # Using a ChoiceField for Category to keep it organized
+    CATEGORY_CHOICES = [
+        ('Pre-Wedding', 'Pre-Wedding'),
+        ('Wedding', 'Wedding'),
+        ('Portrait', 'Portrait'),
+        ('Event', 'Event'),
+    ]
+
+    title = models.CharField(max_length=200)
+    # Using auto_now_add=True will automatically set the date when created
+    date = models.DateField(auto_now_add=True) 
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='Wedding')
+    # Using Cloudinary for dynamic image uploads
+    image = CloudinaryField('image', blank=True, null=True)
+    excerpt = models.TextField(help_text="A short summary of the blog post")
+    content = models.TextField(blank=True, null=True) # For the full blog body
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-date'] # Shows newest blogs first
 class GalleryItem(models.Model):
     CATEGORY_CHOICES = [
         ('Pre-Wedding', 'Pre-Wedding'),
@@ -119,3 +140,19 @@ class Inquiry(models.Model):
     def __str__(self):
         # FIXED: Removed reference to 'event_date' to prevent 500 errors
         return f"{self.full_name} — {self.inquiry_type} ({self.submitted_at.strftime('%d %b %Y')})"
+
+# ---------------------------------------------------------------------------
+# 5. FEEDBACK MODEL
+# ---------------------------------------------------------------------------
+class Feedback(models.Model):
+    name = models.CharField(max_length=255)
+    feedback_text = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-submitted_at']
+        verbose_name = 'Feedback'
+        verbose_name_plural = 'Feedback'
+
+    def __str__(self):
+        return f"Feedback from {self.name}"

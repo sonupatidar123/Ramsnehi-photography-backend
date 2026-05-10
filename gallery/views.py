@@ -1,11 +1,14 @@
 from rest_framework import viewsets, permissions, filters, mixins
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny, IsAdminUser
-from .models import GalleryItem, Film, Testimonial, Inquiry
+from .models import GalleryItem, Film, Testimonial, Inquiry, Feedback
+from .models import Blog
+from .serializers import BlogSerializer
 from django.http import HttpResponse
+from rest_framework.parsers import MultiPartParser, FormParser
 from .serializers import (
     GalleryItemSerializer, FilmSerializer, 
-    TestimonialSerializer, InquirySerializer
+    TestimonialSerializer, InquirySerializer, FeedbackSerializer
 )
 
 def home(request):
@@ -67,3 +70,22 @@ class InquiryViewSet(viewsets.ModelViewSet):
             return [AllowAny()]
         # Baaki sab (List, Delete, Update) sirf Admin ke liye
         return [IsAdminUser()]
+
+
+
+
+class BlogViewSet(viewsets.ModelViewSet):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+    parser_classes = [MultiPartParser, FormParser]  # ← Add this
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return [AllowAny()]
+        return [IsAdminUser()]
+
+
+class FeedbackViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    queryset = Feedback.objects.all().order_by('-submitted_at')
+    serializer_class = FeedbackSerializer
+    permission_classes = [AllowAny]

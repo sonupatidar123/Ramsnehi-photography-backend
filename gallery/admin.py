@@ -1,6 +1,26 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import GalleryItem, Film, Testimonial, Inquiry
+from .models import GalleryItem, Film, Testimonial, Inquiry, Blog, Feedback
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'image_preview', 'short_excerpt', 'date')
+    list_filter = ('date', 'category')
+    search_fields = ('title', 'excerpt', 'category')
+    readonly_fields = ('image_preview',)
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="height:60px; width:80px; object-fit:cover; border-radius:4px;" />',
+                obj.image.url
+            )
+        return '—'
+    image_preview.short_description = 'Image'
+
+    def short_excerpt(self, obj):
+        return (obj.excerpt[:75] + '…') if len(obj.excerpt) > 75 else obj.excerpt
+    short_excerpt.short_description = 'Description'
 
 
 @admin.register(GalleryItem)
@@ -76,4 +96,24 @@ class InquiryAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         # Inquiries are read-only in admin (don't modify client submissions)
+        return False
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'short_feedback', 'submitted_at']
+    list_filter = ['submitted_at']
+    search_fields = ['name', 'feedback_text']
+    ordering = ['-submitted_at']
+    readonly_fields = ['name', 'feedback_text', 'submitted_at']
+
+    def short_feedback(self, obj):
+        return obj.feedback_text[:80] + '…' if len(obj.feedback_text) > 80 else obj.feedback_text
+    short_feedback.short_description = 'Feedback'
+
+    def has_add_permission(self, request):
+        # Feedback strictly comes from the React funnel
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        # Read-only to prevent tampering
         return False

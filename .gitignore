@@ -1,33 +1,122 @@
-# Byte-compiled / optimized / DLL files
+# Django
+*.pyc
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+env/
+venv/
+renv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Local configuration file (SABSE ZAROORI)
-.env
+# Django & Local
 db.sqlite3
 db.sqlite3-journal
+*.db
+.env
+.env.local
+.env.production
+.env.development
+local_settings.py
 
-# Static and Media files (Cloudinary handle kar raha hai)
+# Static & Media
 staticfiles/
+static/
 media/
+!.gitkeep
 
-# Virtual Environment
+# Python Virtual Environments
 venv/
 env/
 renv/
 .venv/
-.env/
+ENV/
+.virtualenv
 
-# IDE / Editor folders
+# IDE & Editor
 .vscode/
+.vscode/launch.json
 .idea/
 *.swp
+*.swo
+*~
 *.bak
+*.swn
+*.sublime-project
+*.sublime-workspace
 
-# OS generated files
-Thumbs.db
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.hypothesis/
+*.cover
+coverage.xml
+.pytest_cache
+
+# OS Generated Files
 .DS_Store
+.DS_Store?
+._*
+.AppleDouble
+.LSOverride
+Thumbs.db
+thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# Hosting / Deployment files
+# Logs
 *.log
+logs/
+*.log*
+
+# Dependencies
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDEs
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# MacOS
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+$RECYCLE.BIN/
+ehthumbs.db
+
+# Local development
+*.pem
+debug/
+.cache/
+
+# Vercel/Render
+.vercel
+.output
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
