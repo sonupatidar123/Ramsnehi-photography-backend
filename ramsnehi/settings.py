@@ -136,16 +136,19 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
 # --- DATABASE (Supabase Optimization) ---
 
-db_password = os.environ.get('DB_PASSWORD')
-encoded_password = urllib.parse.quote_plus(db_password)
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"postgresql://postgres.wdydpnqymvigsistlqyk:{encoded_password}@aws-1-ap-south-1.pooler.supabase.com:6543/postgres",
-        
-        conn_max_age=300,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.wdydpnqymvigsistlqyk',
+        'PASSWORD': os.environ.get('DB_PASSWORD', '@Egsonu9770'),
+        'HOST': 'aws-1-ap-south-1.pooler.supabase.com',
+        'PORT': '6543',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+        'CONN_MAX_AGE': 300,
+    }
 }
 
 # --
