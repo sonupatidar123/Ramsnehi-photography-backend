@@ -17,12 +17,14 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 # 4. Domains allow karein
 ALLOWED_HOSTS = [
-    'ramsnehi-photography-backend.onrender.com',
-    'ramsnehiphotography.com',
-    'ramsnehi-photography.vercel.app',
-    'localhost',
-
+    "ramsnehi-photography-backend.onrender.com",
+    "ramsnehiphotography.com",
+    "www.ramsnehiphotography.com",
+    "ramsnehi-photography.vercel.app",
+    "localhost",
+    "127.0.0.1",
 ]
+
 # --- APPS ---
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -80,26 +82,25 @@ SIMPLE_JWT = {
 }
 
 # --- CORS ---
-# --- CORS ---
 CORS_ALLOW_ALL_ORIGINS = DEBUG
+
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "authorization",
 ]
 
 if not DEBUG:
     CORS_ALLOWED_ORIGINS = [
-        'ramsnehiphotography.com'
-        'https://www.ramsnehiphotography.com'
+        "https://ramsnehiphotography.com",
+        "https://www.ramsnehiphotography.com",
         "https://ramsnehi-photography.vercel.app",
         "http://localhost:5173",
     ]
 
     CSRF_TRUSTED_ORIGINS = [
-        'ramsnehiphotography.com'
-        'https://www.ramsnehiphotography.com'
+        "https://ramsnehiphotography.com",
+        "https://www.ramsnehiphotography.com",
         "https://ramsnehi-photography.vercel.app",
         "http://localhost:5173",
-
     ]
 CORS_ALLOW_METHODS = [
     "GET",
